@@ -14,14 +14,16 @@
     "doctrine/dbal": "^3",
     "doctrine/doctrine-bundle": "^2.15",
     "doctrine/doctrine-migrations-bundle": "^3.4",
-    "doctrine/orm": "^3.4"
+    "doctrine/orm": "^3.4",
+    "symfony/runtime": "^7.3"
   },
   "require-dev": {
     "symfony/debug-bundle": "^6.0"
   },
   "config": {
     "allow-plugins": {
-      "symfony/flex": true
+      "symfony/flex": true,
+      "symfony/runtime": true
     }
   },
   "scripts": {
