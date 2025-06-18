@@ -14,7 +14,11 @@
     "doctrine/dbal": "^3",
     "doctrine/doctrine-bundle": "^2.15",
     "doctrine/doctrine-migrations-bundle": "^3.4",
-    "doctrine/orm": "^3.4"
+    "doctrine/orm": "^3.4",
+    "sensio/framework-extra-bundle": "^6.2",
+    "symfony/validator": "^7.3",
+    "symfony/form": "^7.3",
+    "symfony/serializer": "^7.3"
   },
   "require-dev": {
     "symfony/debug-bundle": "^6.0",
