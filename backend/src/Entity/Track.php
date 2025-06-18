@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TrackRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrackRepository::class)]
 class Track
@@ -14,15 +15,23 @@ class Track
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $artist = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type("integer")]
     private ?int $duration = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Regex(
+        pattern: '/^[A-Z]{2}-[A-Z0-9]{3}-\d{2}-\d{5}$/',
+        message: 'ISRC must match the pattern XX-XXX-00-00000'
+    )]
     private ?string $isrc = null;
 
     public function getId(): ?int
