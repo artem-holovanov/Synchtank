@@ -1,0 +1,9 @@
+services:
+
+  synchtank:
+    build:
+      target: remote-host
+      args:
+        PHP_MAX_EXECUTION_TIME: 60
+        PHP_UPLOAD_MAX_FILESIZE: 10M
+        PHP_POST_MAX_SIZE: 12M
