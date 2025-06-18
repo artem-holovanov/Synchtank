@@ -5,24 +5,36 @@ namespace App\Entity;
 use App\Repository\TrackRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TrackRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass: TrackRepository::class)
+ */
 class Track
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column
+     */
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * ORM\Column(length: 255)
+     */
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(length: 255)
+     */
     private ?string $artist = null;
 
-    #[ORM\Column]
+    /**
+     * @ORM\Column
+     */
     private ?int $duration = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
+    /**
+     * @ORM\Column(length: 100, nullable: true)
+     */
     private ?string $isrc = null;
 
     public function getId(): ?int
