@@ -18,7 +18,7 @@ class Track
     private ?int $id = null;
 
     /**
-     * ORM\Column(length: 255)
+     * @ORM\Column(length: 255)
      */
     private ?string $title = null;
 
