@@ -2,8 +2,9 @@
 
 ## Setup Instructions
 
-1. Run `npm install`
-2. Start the dev server:
+1. Make sure the Symfony backend is running at http://localhost:8000. 
+2. Run `npm install`
+3. Start the dev server:
    ```
    npm run dev
    ```
