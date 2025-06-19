@@ -65,7 +65,7 @@ const App = {
 
             if (!payload.title) errors.value.title = 'Required'
             if (!payload.artist) errors.value.artist = 'Required'
-            if (payload.isrc && !/^[A-Z]{2}-[A-Z0-9]{3}-\\d{2}-\\d{5}$/.test(payload.isrc))
+            if (payload.isrc && !/^[A-Z]{2}-[A-Z0-9]{3}-\d{2}-\d{5}$/.test(payload.isrc))
                 errors.value.isrc = 'Invalid ISRC'
 
             if (Object.keys(errors.value).length > 0) return
