@@ -1,7 +1,7 @@
+// frontend/main.js
 import { createApp, ref, computed, onMounted } from 'vue'
-import { createPinia, defineStore } from 'pinia'
+import { createPinia } from 'pinia'
 import axios from 'axios'
-
 import { useTrackStore } from './stores/trackStore.js'
 
 const App = {
@@ -17,6 +17,19 @@ const App = {
         })
 
         const errors = ref({})
+
+        const secondsToDuration = (seconds) => {
+            const mm = Math.floor(seconds / 60)
+            const ss = String(seconds % 60).padStart(2, '0')
+            return `${mm}:${ss}`
+        }
+
+        const parseDuration = (input) => {
+            const match = input.trim().match(/^(\d+):(\d{2})$/)
+            if (!match) return null
+            const [, mm, ss] = match
+            return parseInt(mm, 10) * 60 + parseInt(ss, 10)
+        }
 
         const loadForm = (track) => {
             editing.value = track.id
@@ -70,41 +83,50 @@ const App = {
             store.fetchTracks()
         })
 
-        return { form, submit, resetForm, loadForm, errors, editing, store }
+        return {
+            form,
+            submit,
+            resetForm,
+            loadForm,
+            errors,
+            editing,
+            store,
+            secondsToDuration // ✅ expose this to the template
+        }
     },
     template: `
-    <h1>🎵 Track Manager</h1>
+      <h1>🎵 Track Manager</h1>
 
-    <form @submit.prevent="submit">
-      <label>
-        Title:
-        <input v-model="form.title" />
-        <small v-if="errors.title" style="color:red">{{ errors.title }}</small>
-      </label>
-      <label>
-        Artist:
-        <input v-model="form.artist" />
-        <small v-if="errors.artist" style="color:red">{{ errors.artist }}</small>
-      </label>
-      <label>
-        Duration (mm:ss):
-        <input v-model="form.duration" />
-        <small v-if="errors.duration" style="color:red">{{ errors.duration }}</small>
-      </label>
-      <label>
-        ISRC:
-        <input v-model="form.isrc" />
-        <small v-if="errors.isrc" style="color:red">{{ errors.isrc }}</small>
-      </label>
-      <button type="submit">{{ editing ? 'Update' : 'Create' }} Track</button>
-      <button type="button" @click="resetForm" v-if="editing">Cancel</button>
-    </form>
+      <form @submit.prevent="submit">
+        <label>
+          Title:
+          <input v-model="form.title" />
+          <small v-if="errors.title" style="color:red">{{ errors.title }}</small>
+        </label>
+        <label>
+          Artist:
+          <input v-model="form.artist" />
+          <small v-if="errors.artist" style="color:red">{{ errors.artist }}</small>
+        </label>
+        <label>
+          Duration (mm:ss):
+          <input v-model="form.duration" />
+          <small v-if="errors.duration" style="color:red">{{ errors.duration }}</small>
+        </label>
+        <label>
+          ISRC:
+          <input v-model="form.isrc" />
+          <small v-if="errors.isrc" style="color:red">{{ errors.isrc }}</small>
+        </label>
+        <button type="submit">{{ editing ? 'Update' : 'Create' }} Track</button>
+        <button type="button" @click="resetForm" v-if="editing">Cancel</button>
+      </form>
 
-    <table v-if="store.tracks.length">
-      <thead>
+      <table v-if="store.tracks.length">
+        <thead>
         <tr><th>Title</th><th>Artist</th><th>Duration</th><th>ISRC</th><th>Actions</th></tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <tr v-for="track in store.tracks" :key="track.id">
           <td>{{ track.title }}</td>
           <td>{{ track.artist }}</td>
@@ -112,22 +134,9 @@ const App = {
           <td>{{ track.isrc ?? '-' }}</td>
           <td><button @click="loadForm(track)">Edit</button></td>
         </tr>
-      </tbody>
-    </table>
-  `
-}
-
-function secondsToDuration(seconds) {
-    const mm = Math.floor(seconds / 60)
-    const ss = String(seconds % 60).padStart(2, '0')
-    return `${mm}:${ss}`
-}
-
-function parseDuration(input) {
-    const match = input.trim().match(/^(\d+):(\d{2})$/)
-    if (!match) return null
-    const [, mm, ss] = match
-    return parseInt(mm, 10) * 60 + parseInt(ss, 10)
+        </tbody>
+      </table>
+    `
 }
 
 createApp(App).use(createPinia()).mount('#app')
