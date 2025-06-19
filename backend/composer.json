@@ -18,7 +18,8 @@
     "symfony/validator": "^7.3",
     "symfony/form": "^7.3",
     "symfony/serializer": "^7.3",
-    "doctrine/annotations": "^2.0"
+    "doctrine/annotations": "^2.0",
+    "nelmio/cors-bundle": "^2.5"
   },
   "require-dev": {
     "symfony/debug-bundle": "^6.0",
